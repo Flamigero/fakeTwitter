@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile
+    image: twitter_django
+    depends_on: 
+      - postgres
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    stdin_open: true
+    tty: true
+    command: python manage.py migrate
+    command: python manage.py runserver 0.0.0.0:8000
+
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - twitter_django_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  twitter_django_postgres_data: {}
