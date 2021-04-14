@@ -21,4 +21,4 @@ class ProfileAdmin(admin.ModelAdmin):
 
     list_display = ('user', 'is_authenticated', 'picture')
 
-    readonly_fields = ('user', 'created_at', 'updated_at')
+    readonly_fields = ('created_at', 'updated_at')

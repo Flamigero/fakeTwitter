@@ -35,6 +35,7 @@ class User(AbstractUser):
         return self.username
 
 class Profile(models.Model):
+    """Profile model"""
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
     description = models.TextField('user description', max_length=255)
@@ -47,3 +48,7 @@ class Profile(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.user.username
+    
