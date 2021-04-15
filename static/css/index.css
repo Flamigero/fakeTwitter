@@ -43,3 +43,45 @@
     color: white;
     font-size: 1.2rem;
 }
+
+/* Feed */
+.feed{
+    width: 60%;
+    margin: 0 auto;
+}
+.feed h3{
+    font-size: 2rem;
+}
+.feed ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    padding-top: 2rem;
+}
+.feed ul li{
+    border-bottom: 1px solid var(--blue-minim);
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    justify-items: center;
+    padding-top: 1rem;
+}
+.feed ul li figure{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+.feed ul li figure img{
+    border-radius: 50%;
+}
+.feed ul li div{
+    padding-left: 0.8rem;
+    width: 100%;
+}
+.feed ul li div h5{
+    margin: 0;
+    padding-bottom: 1rem;
+    font-size: 1.3rem;
+}
+.feed ul li div h5 span{
+    color: var(--blue-light);
+}
