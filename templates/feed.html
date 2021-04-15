@@ -11,7 +11,11 @@
         {% for tweet in tweets  %}
         <li>
             <figure>
+                {% if tweet.retweet != None %}
+                <img src="{{ tweet.retweet.user.profile.picture.url }}" alt="" width="100%" height="100%">
+                {% else %}
                 <img src="{{ tweet.user.profile.picture.url }}" alt="" width="100%" height="100%">
+                {% endif %}
             </figure>
 
             <div>
@@ -19,8 +23,13 @@
                 <small>{{ tweet.user.username }} Retweeted</small>
                 {% endif %}
                 <h5>
-                    {{ tweet.user.first_name }} 
+                    {% if tweet.retweet != None %}
+                    {{ tweet.retweet.user.first_name }}
+                    <span>@{{ tweet.retweet.user.username }}</span> 
+                    {% else %}
+                    {{ tweet.user.first_name }}
                     <span>@{{ tweet.user.username }}</span> 
+                    {% endif %}
                 </h5>
                 <p>{{ tweet.text }}</p>
             </div>

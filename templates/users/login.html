@@ -5,6 +5,11 @@
 {% endblock  %}
 
 {% block container %}
+
+{% if error %}
+<p>{{ error }}</p>
+{% endif %}
+
 <section class="login">
     <i class="fab fa-twitter"></i>
 
