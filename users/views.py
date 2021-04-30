@@ -6,6 +6,9 @@ Users views
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 
+# Forms
+from users.forms import SignUpForm
+
 def login_view(request):
     """Login view"""
     if request.method == 'POST':
@@ -22,3 +25,17 @@ def login_view(request):
             })
 
     return render(request, 'users/login.html')
+
+def signup_view(request):
+    """SignUp view"""
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = SignUpForm()
+
+    return render(request, 'users/signUp.html', {
+        'form': form
+    })
