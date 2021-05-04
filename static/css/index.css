@@ -10,6 +10,12 @@
     --blue-white: #f9f8f8;
 }
 
+/* Main */
+main{
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+}
+
 /* Login */
 .login{
     width: 400px;
@@ -51,19 +57,65 @@
     color: var(--blue-main);
 }
 
+/* Settings */
+.settings ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.settings ul li{
+    padding: 1rem;
+    font-size: 1.3rem;
+}
+.settings ul li a{
+    text-decoration: none;
+    color: black;
+}
+.settings ul li i{
+    color: var(--blue-main);
+    padding-right: 0.7rem;
+}
+
 /* Feed */
 .feed{
-    width: 60%;
-    margin: 0 auto;
+    padding: 0.5rem;
+    border-right: 1px solid var(--blue-light);
+    border-left: 1px solid var(--blue-light);
 }
 .feed h3{
     font-size: 2rem;
+}
+.feed article{
+    display: flex;
+    padding-bottom: 1rem;
+    border-bottom: 20px solid var(--blue-minim);
+}
+.feed article form{
+    padding:  0 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.feed article form textarea{
+    resize: none;
+    width: 100%;
+    border: 0;
+}
+.feed article form input[type="submit"]{
+    border: 1px solid var(--blue-main);
+    width: 150px;
+    height: 45px;
+    margin-top: 1rem;
+    border-radius: 30px;
+    background-color: var(--blue-main);
+    color: white;
+    font-size: 1.2rem;
+    align-self: flex-end;
 }
 .feed ul{
     padding: 0;
     margin: 0;
     list-style: none;
-    padding-top: 2rem;
 }
 .feed ul li{
     border-bottom: 1px solid var(--blue-minim);
@@ -72,12 +124,12 @@
     justify-items: center;
     padding-top: 1rem;
 }
-.feed ul li figure{
+.feed figure{
     width: 60px;
     height: 60px;
     border-radius: 50%;
 }
-.feed ul li figure img{
+.feed figure img{
     border-radius: 50%;
 }
 .feed ul li div{
