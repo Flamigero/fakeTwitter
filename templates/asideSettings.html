@@ -1,0 +1,23 @@
+<aside class="settings">
+        <ul>
+            <li><i class="fab fa-twitter"></i></li>
+            <li>
+                <a href="{% url 'feed' %}">
+                    <i class="fas fa-home"></i>
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'profile' user.pk %}">
+                    <i class="fas fa-user-circle"></i>
+                    Profile
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'logout' %}">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Exit
+                </a>
+            </li>
+        </ul>
+    </aside>

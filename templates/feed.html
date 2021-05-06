@@ -1,40 +1,24 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block head_content %}
 <title>Feed</title>
 {% endblock  %}
 
 {% block container %}
 <main>
-    <aside class="settings">
-        <ul>
-            <li><i class="fab fa-twitter"></i></li>
-            <li>
-                <a href="{% url 'feed' %}">
-                    <i class="fas fa-home"></i>
-                    Home
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <i class="fas fa-user-circle"></i>
-                    Profile
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'logout' %}">
-                    <i class="fas fa-sign-out-alt"></i>
-                    Exit
-                </a>
-            </li>
-        </ul>
-    </aside>
+    {% include 'asideSettings.html' %}
     <section class="feed">
         <h3>Home</h3>
 
         <article>
             <figure>
-                <img src="{{ user.profile.picture.url }}" alt="" width="100%" height="100%">
+                {% if user.profile.picture %}
+                    <img src="{{ user.profile.picture.url }}" alt="" width="100%" height="100%">
+                {% else %}
+                    <img src="{% static 'img/default.jpg' %}" alt="" width="100%" height="100%">
+                {% endif %}
             </figure>
 
             <form method="POST">
@@ -49,9 +33,21 @@
             <li>
                 <figure>
                     {% if tweet.retweet != None %}
-                    <img src="{{ tweet.retweet.user.profile.picture.url }}" alt="" width="100%" height="100%">
+                        <a href="{% url 'profile' tweet.retweet.user.pk %}">
+                        {% if tweet.retweet.user.profile.picture %}
+                            <img src="{{ tweet.retweet.user.profile.picture.url }}" alt="" width="100%" height="100%">
+                        {% else %}
+                            <img src="{% static 'img/default.jpg' %}" alt="" width="100%" height="100%">
+                        {% endif %}
+                        </a>
                     {% else %}
-                    <img src="{{ tweet.user.profile.picture.url }}" alt="" width="100%" height="100%">
+                        <a href="{% url 'profile' tweet.user.pk %}">
+                        {% if tweet.user.profile.picture %}
+                            <img src="{{ tweet.user.profile.picture.url }}" alt="" width="100%" height="100%">
+                        {% else %}
+                            <img src="{% static 'img/default.jpg' %}" alt="" width="100%" height="100%">
+                        {% endif %}
+                        </a>
                     {% endif %}
                 </figure>
 
@@ -68,7 +64,13 @@
                         <span>@{{ tweet.user.username }}</span> 
                         {% endif %}
                     </h5>
-                    <p>{{ tweet.text }}</p>
+                    <p>
+                        {% if tweet.retweet != None %}
+                        {{ tweet.retweet.text }}
+                        {% else %}
+                        {{ tweet.text }}
+                        {% endif %}
+                    </p>
                 </div>
             </li>
             {% endfor %}

@@ -77,7 +77,7 @@ main{
 }
 
 /* Feed */
-.feed{
+.feed, .profile{
     padding: 0.5rem;
     border-right: 1px solid var(--blue-light);
     border-left: 1px solid var(--blue-light);
@@ -112,35 +112,80 @@ main{
     font-size: 1.2rem;
     align-self: flex-end;
 }
-.feed ul{
+.feed ul, .profile article:nth-child(4) ul{
     padding: 0;
     margin: 0;
     list-style: none;
 }
-.feed ul li{
+.feed ul li, .profile article:nth-child(4) ul li{
     border-bottom: 1px solid var(--blue-minim);
     display: grid;
     grid-template-columns: 70px 1fr;
     justify-items: center;
     padding-top: 1rem;
 }
-.feed figure{
+.feed figure, .profile article:nth-child(4) figure{
     width: 60px;
     height: 60px;
     border-radius: 50%;
 }
-.feed figure img{
+.feed figure img, .profile figure img, .profile article:nth-child(4) figure img{
     border-radius: 50%;
 }
-.feed ul li div{
+.feed ul li div, .profile article:nth-child(4) ul li div{
     padding-left: 0.8rem;
     width: 100%;
 }
-.feed ul li div h5{
+.feed ul li div h5, .profile article:nth-child(4) ul li div h5{
     margin: 0;
     padding-bottom: 1rem;
     font-size: 1.3rem;
 }
-.feed ul li div h5 span{
+.feed ul li div h5 span, .profile article:nth-child(4) ul li div h5 span{
     color: var(--blue-light);
+}
+
+/* Profile */
+.profile figure{
+    width: 130px;
+    height: 130px;
+}
+.profile form input[type="submit"]{
+    border: 1px solid var(--blue-main);
+    width: 150px;
+    height: 45px;
+    margin-top: 1rem;
+    border-radius: 30px;
+    background-color: white;
+    color: var(--blue-main);
+    font-size: 1.2rem;
+}
+.profile article:nth-child(1){
+    display: flex;
+    justify-content: space-between;
+}
+.profile h5{
+    margin: 0;
+    padding-top: 1rem;
+    font-size: 1.3rem;
+}
+.profile span{
+    color: var(--blue-main)
+}
+.profile article:nth-child(3) ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    padding-top: 2rem;
+    color: var(--blue-main);
+    font-weight: bold;
+    display: flex;
+}
+.profile article:nth-child(3) ul li{
+    border-bottom: 3px solid var(--blue-main);
+    padding: 0 1rem;
+    cursor: pointer;
+}
+.profile article:nth-child(4) h5{
+    padding: 0;
 }
