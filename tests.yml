@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  python:
+    build:
+      context: .
+      dockerfile: ./compose/tests/Dockerfile
+    image: faketwitter_tests
+    volumes:
+      - ./tests:/tests
+    stdin_open: true
+    tty: true
+    command: python fakeTwitter_test.py
