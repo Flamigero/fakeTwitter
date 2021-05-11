@@ -1,8 +1,12 @@
-FROM python:3.8-alpine
+FROM python:3.9.1
 
-ADD ./tests/ /tests
+# Updates
+RUN apt update
+RUN apt-get -y install tesseract-ocr
+RUN apt-get install tesseract-ocr-ben
+
+ADD tests /tests
 WORKDIR /tests
 
-# Requeriments
-COPY /tests/requirements.txt /tests/
+# Requirements
 RUN pip install -r requirements.txt

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head_content %}
+<title>Edit profile</title>
+{% endblock  %}
+
+{% block container %}
+<main>
+    {% include 'asideSettings.html' %}
+    <section class="editProfile">
+        <p>{{ form.errors }}</p>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="id" value='{{ userProfile.pk }}'>
+            <input type="file" name="picture">
+            <input type="text" placeholder="First name" name="fname" value='{{ userProfile.first_name }}' required>
+            <input type="text" placeholder="Last name" name="lname" value='{{ userProfile.last_name }}' required>
+            <input type="text" placeholder="Username" name="username" value='{{ userProfile.username }}' disabled>
+            <input type="email" placeholder="Email" name="email" value='{{ userProfile.email }}' disabled>
+            <input type="text" placeholder="Description" name="description" value='{{ profile.description }}' required>
+            <input type="tel"  placeholder="Phone" name="phone" pattern="[0-9]{9}" value='{{ userProfile.phone_number }}' required>
+            <input type="submit" value="Update">
+        </form>
+
+    </section>
+    <aside class="trends"></aside>
+</main>
+{% endblock  %}

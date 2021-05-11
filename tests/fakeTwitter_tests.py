@@ -12,7 +12,7 @@ class FakeTwitterTest(unittest.TestCase):
         os = 'windows'
         self.fakeTwitter = FakeTwitterPage(os)
 
-    def login_test():
+    def login_test(self):
         self.fakeTwitter.open()
         self.fakeTwitter.login()
 

@@ -19,13 +19,13 @@
                 {% endif %}
             </figure>
 
-            <form method="POST">
+            <div>
                 {% if userProfile.pk == user.pk %}
-                <input type="submit" value="Editar perfil">
+                <a href="{% url 'editProfile' user.pk%}">Editar perfil</a>
                 {% else %}
-                <input type="submit" value="Seguir">
+                <a href="">Seguir</a>
                 {% endif %}
-            </form>
+            </div>
         </article>
 
         <article>

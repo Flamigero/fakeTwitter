@@ -18,8 +18,12 @@ RUN apk update \
 
 WORKDIR /app
 
-# Requeriments
+# Requirements
 COPY requeriments.txt /app/
 RUN pip install -r requeriments.txt
+
+# Entrypoint
+COPY init.sh /app/
+RUN chmod +x init.sh
 
 COPY . /app/

@@ -9,9 +9,9 @@ from selenium.webdriver.support import expected_conditions as EC
 class FakeTwitterPage(object):
     def __init__(self, os):
         if os == "windows":
-            self.driver = webdriver.Chrome(executable_path = '../chromedriver.exe')
+            self.driver = webdriver.Chrome(executable_path = './chromedriver.exe')
         else:
-            self.driver = webdriver.Chrome(executable_path = '../chromedriver.exe')
+            self.driver = webdriver.Chrome(executable_path = './chromedriver')
 
         self.url = 'http://localhost:8000/users/login/'
 

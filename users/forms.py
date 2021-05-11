@@ -53,3 +53,30 @@ class SignUpForm(forms.Form):
         )
         profile = Profile.objects.create(user=user)
         profile.save()
+
+class UpdateProfileForm(forms.Form):
+    """Update profile form"""
+
+    id = forms.IntegerField()
+    picture = forms.ImageField(required=False)
+    fname = forms.CharField()
+    lname = forms.CharField()
+    description = forms.CharField()
+    phone = forms.IntegerField()
+
+    def save(self):
+        """Update user and profile"""
+        data = self.cleaned_data
+
+        user = User.objects.filter(pk=data['id'])[0]
+        profile =  Profile.objects.filter(user=user)[0]
+
+        user.first_name = data['fname']
+        user.last_name = data['lname']
+        user.phone_number = data['phone']
+        profile.description = data['description']
+        if data['picture']:
+            profile.picture = data['picture']
+
+        user.save()
+        profile.save()

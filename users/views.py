@@ -7,10 +7,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 
 # Forms
-from users.forms import SignUpForm
+from users.forms import SignUpForm, UpdateProfileForm
 
 # Models
-from users.models import User
+from users.models import Profile, User
 from messages.models import Message
 
 def login_view(request):
@@ -57,4 +57,28 @@ def profile_view(request, id):
     return render(request, 'users/profile.html', {
         'userProfile': userProfile[0],
         'tweets': tweets
+    })
+
+def edit_profile_view(request, id):
+    """Edit profile view"""
+    userRequestPk = request.user.pk
+    
+    if id != userRequestPk:
+        return redirect('feed')
+
+    if request.method == 'POST':
+        form = UpdateProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('feed')
+    else:
+        form = UpdateProfileForm()
+
+    userProfile = User.objects.filter(pk=id)
+    profile = Profile.objects.filter(user=userProfile[0])
+    
+    return render(request, 'users/editprofile.html', {
+        'userProfile': userProfile[0],
+        'profile': profile[0],
+        'form': form
     })

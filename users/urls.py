@@ -6,11 +6,12 @@ Users URLs
 from django.urls import path
 
 # Views
-from .views import login_view, signup_view, logout_view, profile_view
+from .views import login_view, signup_view, logout_view, profile_view, edit_profile_view
 
 urlpatterns = [
     path('login/', login_view, name='login'),
-    path('signUp/', signup_view, name="signUp"),
-    path('logout/', logout_view, name="logout"),
-    path('profile/<int:id>', profile_view, name="profile")
+    path('signUp/', signup_view, name='signUp'),
+    path('logout/', logout_view, name='logout'),
+    path('profile/<int:id>', profile_view, name='profile'),
+    path('profile/<int:id>/edit', edit_profile_view, name='editProfile')
 ]
