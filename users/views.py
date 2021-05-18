@@ -5,6 +5,10 @@ Users views
 # Django
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.views import View
+from django.views.generic.edit import FormView
+from django.views.generic.base import RedirectView
+from django.views.generic.list import ListView
 
 # Forms
 from users.forms import SignUpForm, UpdateProfileForm
@@ -13,72 +17,77 @@ from users.forms import SignUpForm, UpdateProfileForm
 from users.models import Profile, User
 from messages.models import Message
 
-def login_view(request):
-    """Login view"""
-    if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
+class Login(View):
+    template_name = 'users/login.html'
+    email = ''
+    password = ''
 
-        user = authenticate(request, email=email, password=password)
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
+        self.email = request.POST['email']
+        self.password = request.POST['password']
+
+        user = authenticate(request, email=self.email, password=self.password)
         if user:
             login(request, user)
             return redirect('feed')
         else:
-            return render(request, 'users/login.html', {
+            return render(request, self.template_name, {
                 'error': 'Invalid user or password'
             })
 
-    return render(request, 'users/login.html')
+class Signup(FormView):
+    template_name = 'users/signUp.html'
+    form_class = SignUpForm
+    success_url = '/users/login/'
 
-def signup_view(request):
-    """SignUp view"""
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('login')
-    else:
-        form = SignUpForm()
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
 
-    return render(request, 'users/signUp.html', {
-        'form': form
-    })
+class Logout(RedirectView):
+    pattern_name = 'login'
 
-def logout_view(request):
-    """Log out user"""
-    logout(request)
-    return redirect('login')
+    def dispatch(self, request, *args, **kwargs):
+        logout(request)
+        return super().dispatch(request, *args, **kwargs)
 
-def profile_view(request, id):
-    """Profile view"""
-    userProfile = User.objects.filter(pk=id)
-    tweets = Message.objects.filter(user=userProfile[0])
+class ProfileV(ListView):
+    template_name = 'users/profile.html'
+    context_object_name = 'tweets'
 
-    return render(request, 'users/profile.html', {
-        'userProfile': userProfile[0],
-        'tweets': tweets
-    })
+    def get_queryset(self):
+        self.userProfile = User.objects.filter(pk=self.kwargs['id'])[0]
+        return Message.objects.filter(user=self.userProfile)
 
-def edit_profile_view(request, id):
-    """Edit profile view"""
-    userRequestPk = request.user.pk
-    
-    if id != userRequestPk:
-        return redirect('feed')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['userProfile'] = self.userProfile
+        return context
 
-    if request.method == 'POST':
-        form = UpdateProfileForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
+class EditProfile(FormView):
+    template_name = 'users/editprofile.html'
+    form_class = UpdateProfileForm
+    success_url = '/'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.userId = kwargs['id']
+
+        if request.user.pk != kwargs['id']:
             return redirect('feed')
-    else:
-        form = UpdateProfileForm()
+        return super().dispatch(request, *args, **kwargs)
 
-    userProfile = User.objects.filter(pk=id)
-    profile = Profile.objects.filter(user=userProfile[0])
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        userProfile = User.objects.filter(pk=self.userId)[0]
+        profile = Profile.objects.filter(user=userProfile)[0]
+
+        context['userProfile'] = userProfile
+        context['profile'] = profile
+        return context
     
-    return render(request, 'users/editprofile.html', {
-        'userProfile': userProfile[0],
-        'profile': profile[0],
-        'form': form
-    })
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)

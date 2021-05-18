@@ -4,8 +4,8 @@
 from django.urls import path
 
 # Views
-from .views import feed
+from .views import Feed
 
 urlpatterns = [
-    path('', feed, name='feed')
+    path('', Feed.as_view(), name='feed')
 ]
